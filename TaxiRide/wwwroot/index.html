@@ -6,42 +6,12 @@
     </head>
 <body ng-controller="TaxiRideController">
     <div>
-        <!----{{event.cost}} -->
-
-        <form name="taxiRideForm" novalidate>
-        <label>Number of minutes traveling above 6 MPH</label>
-        <input type="text" placeholder="6" ng-model="event.numOfMinutesAboveSixMPH" name="minutesAbove" required ng-pattern="/\d+/"/>
-        <span ng-if="taxiRideForm.$submitted && taxiRideForm.minutesAbove.$error.required">This field is required</span>
-        <span ng-if="taxiRideForm.$submitted && taxiRideForm.minutesAbove.$error.pattern">You entered the wrong format, it must be an int</span>
-        <br />
-        <br />
-        <label>Number of miles traveled below 6 MPH</label>
-        <input type="text" placeholder="2" required ng-model="event.numOfMilesBelowSixMPH" name="milesBelow" ng-pattern="/\d+/"/>
-        <span ng-if="taxiRideForm.$submitted && taxiRideForm.milesBelow.$error.required">This field is required</span>
-        <span ng-if="taxiRideForm.$submitted && taxiRideForm.milesBelow.$error.pattern">You entered the wrong format, it must be an int</span>
-        <br />
-        <br />
-        <label>Date</label>
-        <input type="text" placeholder="Friday (2020-10-31)"name="Date" required ng-model="event.Date" ng-pattern="/(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\s\(\d{4}-(01?[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])\)/" />
-        <span ng-if="taxiRideForm.$submitted && taxiRideForm.Date.$error.required">This field is required</span>
-        <span ng-if="taxiRideForm.$submitted && taxiRideForm.Date.$error.pattern">You entered the wrong format, for example: Tuesday (2020-03-24)</span>
-        <br />
-        <br />
-        <label>Start time of ride</label>
-        <input type="text" name="StartTime"placeholder="2:20am" required ng-model="event.StartTime" ng-pattern="/([1-9]|1[012]):([0-5][0-9])(am|pm)/"/>
-        <span ng-if="taxiRideForm.$submitted && taxiRideForm.StartTime.$error.required">This field is required</span>
-        <span ng-if="taxiRideForm.$submitted && taxiRideForm.StartTime.$error.pattern">You entered the wrong format, for example: 1:00am</span>
-        <br />
-        <br />
-        <button type="submit" ng-disabled="taxiRideForm.even.Date.$error.pattern" ng-click="event.sendRideInfo(taxiRideForm.$valid)">Calculate Cost</button>
-        {{event.cost}}
-        {{event.ErrorMessage}}
-       </form> 
+        <taxi-ride-form event="event" get-ride-info="getRideInfo" send-ride-info="sendRideInfo" set-json-data="setJsonData"></taxi-ride-form>
     </div>
     <script src="scripts/angular.js"></script>
     <script src="app/app.js"></script>
     <script src="app/TaxiRideController.js"></script>
-    <script src="app/TaxiService.js"></script>
+    <script src="app/TaxiDirective.js"></script>
 
 </body>
 </html>

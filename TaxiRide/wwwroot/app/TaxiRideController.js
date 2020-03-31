@@ -2,9 +2,7 @@
 
 taxiRideApp.controller('TaxiRideController',
     function ($scope, $http) {
-        $scope.event= {
-            sendRideInfo: sendRideInfo,
-            getRideInfo: getRideInfo,
+        $scope.event = {
             cost: "",
             numOfMinutesAboveSixMPH: "",
             numOfMilesBelowSixMPH: "",
@@ -14,14 +12,26 @@ taxiRideApp.controller('TaxiRideController',
 
         };
 
-        function getRideInfo() {
+        $scope.getRideInfo = function () {
             return $http({
                 method: 'GET',
                 url: 'api/Taxi'
-            })
-        }
+            });
+        };
 
-        function sendRideInfo(isValid) {
+        $scope.sendRideInfo = function (jsonBody) {
+            return $http({
+                method: 'POST',
+                url: 'api/Taxi',
+                data: jsonBody
+            }).then(function () {
+                $scope.getRideInfo().then(function (response) {
+                    $scope.event.cost = response.data;
+                });
+            });
+        };
+
+        $scope.setJsonData = function (isValid) {
             if (isValid) {
                 var jsonBody = {
                     NumOfMinutesAboveSixMPH: $scope.event.numOfMinutesAboveSixMPH,
@@ -29,16 +39,9 @@ taxiRideApp.controller('TaxiRideController',
                     DateOfRide: $scope.event.Date,
                     TimeOfStart: $scope.event.StartTime
                 }
-                return $http({
-                    method: 'POST',
-                    url: 'api/Taxi',
-                    data: jsonBody
-                }).then(function () {
-                    getRideInfo().then(function (response) {
-                        $scope.event.cost = response.data;
-                    });
-                });
+                $scope.sendRideInfo(jsonBody);
             }
-        }
+        };
     }
 );
+
