@@ -12,6 +12,8 @@ taxiRideApp.controller('TaxiRideController',
 
         };
 
+        $scope.message="Hello"
+
         $scope.getRideInfo = function () {
             return $http({
                 method: 'GET',
