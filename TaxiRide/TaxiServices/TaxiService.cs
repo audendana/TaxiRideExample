@@ -53,12 +53,17 @@ namespace TaxiRide.TaxiServices
                 string dateSplit = taxiRide.DateOfRide.Split(' ')[0].ToLower();
 
                 // if it doesnt equal these then we know its mon - fri
-                if (!dateSplit.Equals(DaysOfWeek[5]) && !dateSplit.Equals(DaysOfWeek[6]))
+                if (!dateSplit.Equals(DaysOfWeek[5]) && !dateSplit.Equals(DaysOfWeek[6]) && 
+                    (dateSplit.Equals(DaysOfWeek[0]) || dateSplit.Equals(DaysOfWeek[1]) || dateSplit.Equals(DaysOfWeek[2]) || dateSplit.Equals(DaysOfWeek[3]) || dateSplit.Equals(DaysOfWeek[4])))
                 {
                     if ((timeSplit >= 4 && timeSplit <= 8) && !AM)
                     {
                         costOfRide += weekdayCharge;
                     }
+                }
+                else
+                {
+                    throw new InvalidCastException();
                 }
 
                 // surcharge for the nightly by $.5
